@@ -1,8 +1,7 @@
 <template>
   <v-app>
     <v-toolbar fixed app :clipped-left="clipped">
-        <v-img src="/pacific_bridge_logo.png" max-width="200"/>
-        <v-toolbar-title v-text="title"></v-toolbar-title>
+        <v-img src="/pacific_bridge_logo.png" max-width="180"/>
         <v-toolbar-items class="hidden-sm-and-down">
             <v-btn flat to="/">Home</v-btn>
             <v-btn flat to="/opportunities">Opportunities</v-btn>
