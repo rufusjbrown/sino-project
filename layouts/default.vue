@@ -5,7 +5,7 @@
         <v-toolbar-items class="hidden-sm-and-down">
             <v-btn flat to="/">Home</v-btn>
             <v-btn flat to="/opportunities">Opportunities</v-btn>
-            <v-btn flat>Link Three</v-btn>
+            <v-btn flat to="/jobs">Jobs</v-btn>
         </v-toolbar-items>
         <v-spacer></v-spacer>
         <v-btn

@@ -1,59 +1,104 @@
 <template>
-  <form>
-    <v-text-field
-        v-validate="'required|max:10'"
-        v-model="userDetails.name"
-        :counter="10"
-        :error-messages="errors.collect('name')"
-        label="Name"
-        data-vv-name="name"
-        required
-    ></v-text-field>
-    {{ name }}
-    <v-text-field
-        v-validate="'required|email'"
-        v-model="userDetails.email"
-        :error-messages="errors.collect('email')"
-        label="E-mail"
-        data-vv-name="email"
-        required
-    ></v-text-field>
-    <v-select
-        :items="subjects"
-        v-model="userDetails.expertise"
-        :menu-props="{ maxHeight: '400' }"
-        label="Select your known subjects"
-        multiple
-    ></v-select>
-    {{e6}}
-    <v-checkbox
-        v-validate="'required'"
-        v-model="checkbox"
-        :error-messages="errors.collect('checkbox')"
-        value="1"
-        label="Option"
-        data-vv-name="checkbox"
-        type="checkbox"
-        required
-    ></v-checkbox>
-    <v-btn @click="submit">submit</v-btn>
-    <v-btn @click="clear">clear</v-btn>
-    Form Data to send to server:
-    {{ userDetails }}
-  </form>
+    <section>
+        <v-form ref="form" v-model="valid" lazy-validation>
+            <v-text-field
+            v-model="name"
+            :rules="nameRules"
+            :counter="30"
+            label="Name"
+            required
+            ></v-text-field>
+            <v-text-field
+            v-model="email"
+            :rules="emailRules"
+            label="E-mail"
+            required
+            ></v-text-field>
+            <v-select
+            v-model="select"
+            :items="items"
+            :rules="[v => !!v || 'Item is required']"
+            label="Item"
+            required
+            ></v-select>
+            <v-checkbox
+            v-model="checkbox"
+            :rules="[v => !!v || 'You must agree to continue!']"
+            label="Do you agree?"
+            required
+            ></v-checkbox>
+
+            <v-btn
+            :disabled="!valid"
+            @click="submit"
+            >
+            submit
+            </v-btn>
+            <v-btn @click="clear">clear</v-btn>
+        </v-form>
+        <ul>
+            <li v-for="user in users">
+                {{ user.name }} -- {{ user.email }}
+            </li>
+        </ul>
+    </section>
 </template>
 
 <script>
+  import axios from 'axios'
+
   export default {
-    data () {
-      return {
-        subjects: ['English', 'Maths', 'Physics'],
-        userDetails: {
-          name: '',
-          email: '',
-          expertise: []
+    data: () => ({
+      valid: true,
+      name: '',
+      nameRules: [
+        v => !!v || 'Name is required',
+        v => (v && v.length <= 30) || 'Name must be less than 30 characters'
+      ],
+      email: '',
+      emailRules: [
+        v => !!v || 'E-mail is required',
+        v => /.+@.+/.test(v) || 'E-mail must be valid'
+      ],
+      select: null,
+      items: [
+        'Item 1',
+        'Item 2',
+        'Item 3',
+        'Item 4'
+      ],
+      checkbox: false,
+      users: ''
+    }),
+    methods: {
+      submit () {
+        if (this.$refs.form.validate()) {
+          // Native form submission is not yet supported
+          axios.post('http://localhost:5000/api/submit', {
+            name: this.name,
+            email: this.email
+          })
+          console.log({
+            name: this.name,
+            email: this.email,
+            select: this.select,
+            checkbox: this.checkbox
+          })
         }
+        this.getUsers()
+      },
+      clear () {
+        this.$refs.form.reset()
+      },
+      getUsers () {
+        axios.get('http://localhost:5000/api/getUsers')
+          .then(res => {
+            this.users = res.data
+          })
       }
+    },
+    created () {
+      this.getUsers()
     }
   }
 </script>
