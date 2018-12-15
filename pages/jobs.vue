@@ -10,13 +10,6 @@
                                 class="white--text"                                
                                 :src=school.imageUrl
                                 >
-                                <v-container fill-height fluid>
-                                    <v-layout fill-height>
-                                        <v-flex xs12 align-end flexbox>
-                                            <span class="headline">{{school.school}}</span>
-                                        </v-flex>
-                                    </v-layout>
-                                </v-container>
                                 </v-img>
                             </v-flex>
                             <v-flex xs8>
