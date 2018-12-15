@@ -62,7 +62,8 @@
         fixed: false,
         items: [
           { icon: 'apps', title: 'Home', to: '/' },
-          { icon: 'bubble_chart', title: 'Opportunities', to: '/opportunities' }
+          { icon: 'bubble_chart', title: 'Opportunities', to: '/opportunities' },
+          { icon: 'school', title: 'Jobs', to: '/jobs' }
         ],
         miniVariant: false,
         right: true,
