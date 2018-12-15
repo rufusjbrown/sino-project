@@ -54,7 +54,7 @@ export default {
   },
   methods: {
     getSchools () {
-      const path = 'http://rufusbrown.pythonanywhere.com/api/getSchools'
+      const path = 'https://rufusbrown.pythonanywhere.com/api/getSchools'
       axios.get(path)
         .then((res) => {
           console.log('response:', res.data)
