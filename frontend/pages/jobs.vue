@@ -25,7 +25,7 @@
                                 <div>
                                     <span class="grey--text">Published: {{school.pub_date}}</span><br>
                                     <span>{{school.school}}</span><br>
-                                    <span>{{school.description}}</span>
+                                    <span>Blah blah blah</span>
                                 </div>
                                 </v-card-title>
                                 <v-card-actions>
@@ -54,7 +54,7 @@ export default {
   },
   methods: {
     getSchools () {
-      const path = 'http://localhost:5000/api/getSchools'
+      const path = 'http://rufusbrown.pythonanywhere.com/api/getSchools'
       axios.get(path)
         .then((res) => {
           console.log('response:', res.data)
