@@ -7,8 +7,7 @@
                         <v-layout row>
                             <v-flex xs4>
                                 <v-img 
-                                class="white--text"
-                                height="300px"
+                                class="white--text"                                
                                 :src=school.imageUrl
                                 >
                                 <v-container fill-height fluid>
