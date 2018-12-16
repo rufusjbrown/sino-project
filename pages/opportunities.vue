@@ -74,7 +74,7 @@
       submit () {
         if (this.$refs.form.validate()) {
           // Native form submission is not yet supported
-          axios.post('http://localhost:5000/api/submit', {
+          axios.post('https://rufusbrown.pythonanywhere.com/api/submit', {
             name: this.name,
             email: this.email
           })
