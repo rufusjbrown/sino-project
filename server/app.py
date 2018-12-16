@@ -2,7 +2,8 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 import os
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
+from datetime import datetime, date
+import json
 
 project_dir = os.path.dirname(os.path.abspath(__file__))
 database_file = "sqlite:///{}".format(os.path.join(project_dir, "pacific-bridge.db"))
@@ -23,6 +24,12 @@ CORS(app)
 class User(db.Model):
     name = db.Column(db.String(80), unique=True, nullable=False, primary_key=True)
     email = db.Column(db.String(80), unique=True, nullable=False, primary_key=False)
+    nationality = db.Column(db.String(120), unique=False, nullable=False, primary_key=False)
+    experience = db.Column(db.String(120), unique=False, nullable=False, primary_key=False)
+    startDate = db.Column(db.Date, unique=False, nullable=False, primary_key=False)
+    preferredLocation = db.Column(db.String(120), unique=False, nullable=False, primary_key=False)
+    qualifications = db.Column(db.String(120), unique=False, nullable=False, primary_key=False)
+    positionSeeked = db.Column(db.String(120), unique=False, nullable=False, primary_key=False)
 
     # def __repr__(self):
     #     return "<Name: {}>".format(self.name)
@@ -44,7 +51,14 @@ def home():
     if request.method == 'POST':
         name = request.get_json()['name']
         email = request.get_json()['email']
-        user = User(name = name, email = email)
+        nationality = request.get_json()['nationality']
+        experience = request.get_json()['experience']
+        startDate = datetime.strptime(request.get_json()['startDate'], '%Y-%m-%d')
+        print('startDate', request.get_json()['startDate'])
+        preferredLocation = request.get_json()['preferredLocation']
+        qualifications = json.dumps(request.get_json()['qualifications'])
+        positionSeeked = json.dumps(request.get_json()['positionSeeked'])
+        user = User(name = name, email = email, nationality = nationality, experience = experience, preferredLocation = preferredLocation, qualifications = qualifications, positionSeeked = positionSeeked, startDate = startDate)
         db.session.add(user)
         db.session.commit()
         print(user, email)
