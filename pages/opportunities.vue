@@ -46,16 +46,21 @@
                 transition="scale-transition"
                 offset-y
                 full-width
-                min-width="290px"
-            >
+                max-width="290px"
+                min-width="290px">
                 <v-text-field
                 slot="activator"
                 v-model="date"
-                label="Picker in menu"
+                label="Earliest Start Date"
                 prepend-icon="event"
                 readonly
                 ></v-text-field>
-                <v-date-picker v-model="date" no-title scrollable>
+                <v-date-picker
+                v-model="date"
+                type="month"
+                no-title
+                scrollable
+                >
                 <v-spacer></v-spacer>
                 <v-btn flat color="primary" @click="menu = false">Cancel</v-btn>
                 <v-btn flat color="primary" @click="$refs.menu.save(date)">OK</v-btn>
@@ -85,13 +90,6 @@
                 persistent-hint
                 solo>
             </v-select>
-            <v-checkbox
-            v-model="checkbox"
-            :rules="[v => !!v || 'You must agree to continue!']"
-            label="Do you agree?"
-            required
-            ></v-checkbox>
-
             <v-btn
             :disabled="!valid"
             @click="submit"
@@ -100,11 +98,6 @@
             </v-btn>
             <v-btn @click="clear">clear</v-btn>
         </v-form>
-        <ul>
-            <li v-for="user in users" :key="user.name">
-                {{ user.name }} -- {{ user.email }}
-            </li>
-        </ul>
     </section>
 </template>
 
@@ -119,6 +112,8 @@
       preferredLocation: preferredLocation,
       qualifications: qualifications,
       positionSeeking: positionSeeking,
+      date: new Date().toISOString().substr(0, 10),
+      menu: false,
       valid: true,
       name: '',
       nameRules: [
