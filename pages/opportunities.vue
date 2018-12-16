@@ -91,7 +91,7 @@
         this.$refs.form.reset()
       },
       getUsers () {
-        axios.get('http://localhost:5000/api/getUsers')
+        axios.get('https://rufusbrown.pythonanywhere.com/api/getUsers')
           .then(res => {
             this.users = res.data
           })
